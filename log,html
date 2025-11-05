@@ -1,172 +1,240 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-
-@Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
-})
-export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  isLoading = false;
-  showPassword = false;
-  errorMessage = '';
-  successMessage = '';
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private router: Router
-    // Add your authentication service here
-  ) {
-    this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      rememberMe: [false]
-    });
-  }
-
-  ngOnInit(): void {
-    // Initialize any needed services or check if user is already logged in
-    this.initializeFloatingShapes();
-  }
-
-  // Form getters for easy access in template
-  get email() { return this.loginForm.get('email'); }
-  get password() { return this.loginForm.get('password'); }
-
-  // Toggle password visibility
-  togglePasswordVisibility(): void {
-    this.showPassword = !this.showPassword;
-  }
-
-  // Handle form submission
-  async onSubmit(): Promise<void> {
-    if (this.loginForm.valid && !this.isLoading) {
-      this.isLoading = true;
-      this.errorMessage = '';
-      this.successMessage = '';
-
-      try {
-        const credentials = {
-          email: this.email?.value,
-          password: this.password?.value,
-          rememberMe: this.loginForm.get('rememberMe')?.value
-        };
-
-        // Replace this with your actual authentication service call
-        const result = await this.authenticateUser(credentials);
-
-        if (result.success) {
-          this.successMessage = 'Login successful! Redirecting...';
-          
-          // Store auth token if needed
-          if (credentials.rememberMe) {
-            localStorage.setItem('rememberMe', 'true');
-          }
-
-          // Navigate to dashboard or intended route
-          setTimeout(() => {
-            this.router.navigate(['/dashboard']);
-          }, 1500);
-        } else {
-          this.errorMessage = result.message || 'Invalid credentials. Please try again.';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ManTech - Secure Login Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'mantech-red': '#C8102E',
+                        'mantech-dark-red': '#A50E25',
+                        'mantech-light-red': '#E8485F',
+                        'mantech-gray': '#6B7280',
+                        'mantech-dark-gray': '#374151'
+                    },
+                    fontFamily: {
+                        'corporate': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
         }
-      } catch (error) {
-        this.errorMessage = 'An error occurred during login. Please try again.';
-        console.error('Login error:', error);
-      } finally {
-        this.isLoading = false;
-      }
-    } else {
-      this.markFormGroupTouched();
-    }
-  }
-
-  // Handle SSO login methods
-  loginWithMicrosoft(): void {
-    // Implement Microsoft SSO login
-    console.log('Microsoft SSO login triggered');
-    // Add your Microsoft authentication logic here
-  }
-
-  loginWithCAC(): void {
-    // Implement CAC/PIV card login
-    console.log('CAC/PIV login triggered');
-    // Add your CAC authentication logic here
-  }
-
-  // Handle forgot password
-  onForgotPassword(): void {
-    // Navigate to forgot password page or open modal
-    this.router.navigate(['/forgot-password']);
-  }
-
-  // Utility method to mark all form fields as touched
-  private markFormGroupTouched(): void {
-    Object.keys(this.loginForm.controls).forEach(key => {
-      const control = this.loginForm.get(key);
-      control?.markAsTouched();
-    });
-  }
-
-  // Mock authentication method - replace with your actual service
-  private async authenticateUser(credentials: any): Promise<{success: boolean, message?: string}> {
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    // Mock authentication logic - replace with actual API call
-    if (credentials.email === 'admin@mantech.com' && credentials.password === 'password123') {
-      return { success: true };
-    } else {
-      return { 
-        success: false, 
-        message: 'Invalid email or password. Please check your credentials and try again.' 
-      };
-    }
-  }
-
-  // Initialize floating background shapes animation
-  private initializeFloatingShapes(): void {
-    // This could be enhanced with more complex animations
-    // For now, the CSS handles the basic floating animation
-  }
-
-  // Get error message for specific field
-  getFieldError(fieldName: string): string {
-    const field = this.loginForm.get(fieldName);
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="font-corporate min-h-screen bg-gradient-to-br from-mantech-red via-mantech-dark-red to-red-900 flex items-center justify-center p-4">
     
-    if (field?.errors && field.touched) {
-      if (field.errors['required']) {
-        return `${this.capitalizeFirst(fieldName)} is required`;
-      }
-      if (field.errors['email']) {
-        return 'Please enter a valid email address';
-      }
-      if (field.errors['minlength']) {
-        return `${this.capitalizeFirst(fieldName)} must be at least ${field.errors['minlength'].requiredLength} characters`;
-      }
-    }
-    
-    return '';
-  }
+    <!-- Main Login Container -->
+    <div class="w-full max-w-md">
+        
+        <!-- Header Section -->
+        <div class="text-center mb-8">
+            <!-- ManTech Logo -->
+            <div class="mx-auto w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl mb-6 transform hover:scale-105 transition-transform duration-300">
+                <i class="fas fa-shield-alt text-mantech-red text-3xl"></i>
+            </div>
+            
+            <h1 class="text-4xl font-bold text-white mb-2 tracking-wide">ManTech</h1>
+            <h2 class="text-xl font-semibold text-red-100 mb-2">Secure Access Portal</h2>
+            <p class="text-red-200 text-sm">Mission-Critical Solutions & Advanced Technology</p>
+            
+            <!-- Security Badge -->
+            <div class="inline-flex items-center bg-green-600 text-white text-xs font-medium px-3 py-1 rounded-full mt-4 shadow-lg">
+                <i class="fas fa-lock text-xs mr-2"></i>
+                SSL Protected • Enterprise Security
+            </div>
+        </div>
 
-  // Utility method to capitalize first letter
-  private capitalizeFirst(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
+        <!-- Login Form -->
+        <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-white/20">
+            <form class="space-y-6">
+                
+                <!-- Email Field -->
+                <div>
+                    <label for="email" class="block text-sm font-semibold text-mantech-dark-gray mb-2">
+                        <i class="fas fa-user text-mantech-red mr-2"></i>
+                        Email Address
+                    </label>
+                    <div class="relative">
+                        <input 
+                            id="email" 
+                            type="email" 
+                            required 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mantech-red focus:border-mantech-red transition-all duration-300 text-gray-900 placeholder-gray-500"
+                            placeholder="Enter your email address"
+                        >
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                            <i class="fas fa-envelope text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
 
-  // Handle enter key press
-  onEnterKey(event: KeyboardEvent): void {
-    if (event.key === 'Enter') {
-      this.onSubmit();
-    }
-  }
+                <!-- Password Field -->
+                <div>
+                    <label for="password" class="block text-sm font-semibold text-mantech-dark-gray mb-2">
+                        <i class="fas fa-lock text-mantech-red mr-2"></i>
+                        Password
+                    </label>
+                    <div class="relative">
+                        <input 
+                            id="password" 
+                            type="password" 
+                            required 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mantech-red focus:border-mantech-red transition-all duration-300 text-gray-900 placeholder-gray-500"
+                            placeholder="Enter your password"
+                        >
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" onclick="togglePassword()">
+                            <i id="password-toggle" class="fas fa-eye text-gray-400 hover:text-mantech-red transition-colors"></i>
+                        </div>
+                    </div>
+                </div>
 
-  // Clear error message when user starts typing
-  onInputChange(): void {
-    if (this.errorMessage) {
-      this.errorMessage = '';
-    }
-  }
-}
+                <!-- Remember Me & Forgot Password -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input 
+                            id="remember-me" 
+                            type="checkbox" 
+                            class="h-4 w-4 text-mantech-red focus:ring-mantech-red border-gray-300 rounded"
+                        >
+                        <label for="remember-me" class="ml-2 block text-sm text-mantech-dark-gray font-medium">
+                            Remember me
+                        </label>
+                    </div>
+                    <div class="text-sm">
+                        <a href="#" class="font-medium text-mantech-red hover:text-mantech-dark-red transition-colors">
+                            Forgot password?
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Sign In Button -->
+                <button 
+                    type="submit" 
+                    class="w-full flex justify-center items-center py-3 px-4 border border-transparent text-sm font-semibold rounded-lg text-white bg-mantech-red hover:bg-mantech-dark-red focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mantech-red transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+                >
+                    <i class="fas fa-sign-in-alt mr-2"></i>
+                    Sign In Securely
+                </button>
+
+                <!-- Divider -->
+                <div class="relative my-6">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500 font-medium">Or continue with</span>
+                    </div>
+                </div>
+
+                <!-- SSO Options -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button 
+                        type="button" 
+                        class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-mantech-red transition-all duration-200"
+                    >
+                        <i class="fab fa-microsoft text-blue-500 text-lg mr-2"></i>
+                        Microsoft
+                    </button>
+                    
+                    <button 
+                        type="button" 
+                        class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-mantech-red transition-all duration-200"
+                    >
+                        <i class="fas fa-id-card text-green-600 text-lg mr-2"></i>
+                        CAC/PIV
+                    </button>
+                </div>
+            </form>
+
+            <!-- Security Notice -->
+            <div class="border-t border-gray-200 pt-6 mt-6">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <div class="flex items-start">
+                        <i class="fas fa-info-circle text-blue-500 mt-0.5 mr-2 flex-shrink-0"></i>
+                        <p class="text-xs text-blue-700">
+                            <strong>Security Notice:</strong> This system is for authorized ManTech personnel only. 
+                            All access attempts are monitored and logged for security purposes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-8 space-y-3">
+            <p class="text-red-100 text-sm">
+                Need assistance? Contact 
+                <a href="mailto:support@mantech.com" class="font-semibold text-white hover:text-red-200 transition-colors underline">
+                    IT Support
+                </a>
+            </p>
+            <div class="flex justify-center space-x-4 text-xs text-red-200">
+                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                <span>•</span>
+                <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                <span>•</span>
+                <a href="#" class="hover:text-white transition-colors">Support Portal</a>
+            </div>
+            <p class="text-xs text-red-300 pt-2">
+                © 2024 ManTech International Corporation. All rights reserved.
+            </p>
+        </div>
+    </div>
+
+    <!-- JavaScript for functionality -->
+    <script>
+        // Password visibility toggle
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordToggle = document.getElementById('password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordToggle.classList.remove('fa-eye');
+                passwordToggle.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                passwordToggle.classList.remove('fa-eye-slash');
+                passwordToggle.classList.add('fa-eye');
+            }
+        }
+
+        // Form submission handling
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            const originalContent = submitButton.innerHTML;
+            
+            // Show loading state
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Authenticating...';
+            submitButton.disabled = true;
+            
+            // Simulate authentication process
+            setTimeout(() => {
+                submitButton.innerHTML = originalContent;
+                submitButton.disabled = false;
+                alert('Login functionality would be implemented here');
+            }, 2000);
+        });
+
+        // Add subtle animations on input focus
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('transform', 'scale-105');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('transform', 'scale-105');
+            });
+        });
+    </script>
+</body>
+</html>
