@@ -1,240 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ManTech - Secure Login Portal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'mantech-red': '#C8102E',
-                        'mantech-dark-red': '#A50E25',
-                        'mantech-light-red': '#E8485F',
-                        'mantech-gray': '#6B7280',
-                        'mantech-dark-gray': '#374151'
-                    },
-                    fontFamily: {
-                        'corporate': ['Inter', 'system-ui', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="font-corporate min-h-screen bg-gradient-to-br from-mantech-red via-mantech-dark-red to-red-900 flex items-center justify-center p-4">
-    
-    <!-- Main Login Container -->
-    <div class="w-full max-w-md">
-        
-        <!-- Header Section -->
-        <div class="text-center mb-8">
-            <!-- ManTech Logo -->
-            <div class="mx-auto w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl mb-6 transform hover:scale-105 transition-transform duration-300">
-                <i class="fas fa-shield-alt text-mantech-red text-3xl"></i>
-            </div>
-            
-            <h1 class="text-4xl font-bold text-white mb-2 tracking-wide">ManTech</h1>
-            <h2 class="text-xl font-semibold text-red-100 mb-2">Secure Access Portal</h2>
-            <p class="text-red-200 text-sm">Mission-Critical Solutions & Advanced Technology</p>
-            
-            <!-- Security Badge -->
-            <div class="inline-flex items-center bg-green-600 text-white text-xs font-medium px-3 py-1 rounded-full mt-4 shadow-lg">
-                <i class="fas fa-lock text-xs mr-2"></i>
-                SSL Protected • Enterprise Security
-            </div>
+<div class="login-container">
+  <!-- Background Elements -->
+  <div class="bg-pattern"></div>
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+  
+  <div class="login-wrapper">
+    <!-- Logo Section -->
+    <div class="logo-section">
+      <div class="logo-circle">
+        <svg class="logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+        </svg>
+      </div>
+      <h1 class="company-name">
+        Man<span class="company-name-accent">Tech</span>
+      </h1>
+      <p class="portal-title">SECURE ACCESS PORTAL</p>
+    </div>
+
+    <!-- Login Card -->
+    <div class="login-card">
+      <div class="card-accent"></div>
+      
+      <div class="card-content">
+        <!-- Security Badge -->
+        <div class="security-badge">
+          <div class="status-indicator">
+            <div class="status-dot"></div>
+            <div class="status-pulse"></div>
+          </div>
+          <span class="security-text">SECURE CONNECTION</span>
+          <svg class="security-icon" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+          </svg>
         </div>
 
         <!-- Login Form -->
-        <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-white/20">
-            <form class="space-y-6">
-                
-                <!-- Email Field -->
-                <div>
-                    <label for="email" class="block text-sm font-semibold text-mantech-dark-gray mb-2">
-                        <i class="fas fa-user text-mantech-red mr-2"></i>
-                        Email Address
-                    </label>
-                    <div class="relative">
-                        <input 
-                            id="email" 
-                            type="email" 
-                            required 
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mantech-red focus:border-mantech-red transition-all duration-300 text-gray-900 placeholder-gray-500"
-                            placeholder="Enter your email address"
-                        >
-                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                            <i class="fas fa-envelope text-gray-400"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Password Field -->
-                <div>
-                    <label for="password" class="block text-sm font-semibold text-mantech-dark-gray mb-2">
-                        <i class="fas fa-lock text-mantech-red mr-2"></i>
-                        Password
-                    </label>
-                    <div class="relative">
-                        <input 
-                            id="password" 
-                            type="password" 
-                            required 
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mantech-red focus:border-mantech-red transition-all duration-300 text-gray-900 placeholder-gray-500"
-                            placeholder="Enter your password"
-                        >
-                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" onclick="togglePassword()">
-                            <i id="password-toggle" class="fas fa-eye text-gray-400 hover:text-mantech-red transition-colors"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Remember Me & Forgot Password -->
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <input 
-                            id="remember-me" 
-                            type="checkbox" 
-                            class="h-4 w-4 text-mantech-red focus:ring-mantech-red border-gray-300 rounded"
-                        >
-                        <label for="remember-me" class="ml-2 block text-sm text-mantech-dark-gray font-medium">
-                            Remember me
-                        </label>
-                    </div>
-                    <div class="text-sm">
-                        <a href="#" class="font-medium text-mantech-red hover:text-mantech-dark-red transition-colors">
-                            Forgot password?
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Sign In Button -->
-                <button 
-                    type="submit" 
-                    class="w-full flex justify-center items-center py-3 px-4 border border-transparent text-sm font-semibold rounded-lg text-white bg-mantech-red hover:bg-mantech-dark-red focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mantech-red transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-                >
-                    <i class="fas fa-sign-in-alt mr-2"></i>
-                    Sign In Securely
-                </button>
-
-                <!-- Divider -->
-                <div class="relative my-6">
-                    <div class="absolute inset-0 flex items-center">
-                        <div class="w-full border-t border-gray-300"></div>
-                    </div>
-                    <div class="relative flex justify-center text-sm">
-                        <span class="px-2 bg-white text-gray-500 font-medium">Or continue with</span>
-                    </div>
-                </div>
-
-                <!-- SSO Options -->
-                <div class="grid grid-cols-2 gap-3">
-                    <button 
-                        type="button" 
-                        class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-mantech-red transition-all duration-200"
-                    >
-                        <i class="fab fa-microsoft text-blue-500 text-lg mr-2"></i>
-                        Microsoft
-                    </button>
-                    
-                    <button 
-                        type="button" 
-                        class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-mantech-red transition-all duration-200"
-                    >
-                        <i class="fas fa-id-card text-green-600 text-lg mr-2"></i>
-                        CAC/PIV
-                    </button>
-                </div>
-            </form>
-
-            <!-- Security Notice -->
-            <div class="border-t border-gray-200 pt-6 mt-6">
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                    <div class="flex items-start">
-                        <i class="fas fa-info-circle text-blue-500 mt-0.5 mr-2 flex-shrink-0"></i>
-                        <p class="text-xs text-blue-700">
-                            <strong>Security Notice:</strong> This system is for authorized ManTech personnel only. 
-                            All access attempts are monitored and logged for security purposes.
-                        </p>
-                    </div>
-                </div>
+        <form class="login-form">
+          <!-- Username Field -->
+          <div class="form-group">
+            <label class="form-label">USERNAME</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <input 
+                type="text" 
+                class="form-input" 
+                placeholder="Enter your username"
+                [(ngModel)]="username"
+                name="username"
+              />
             </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group">
+            <label class="form-label">PASSWORD</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <input 
+                type="password" 
+                class="form-input" 
+                placeholder="Enter your password"
+                [(ngModel)]="password"
+                name="password"
+              />
+            </div>
+          </div>
+
+          <!-- Remember & Forgot -->
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox" class="checkbox" [(ngModel)]="rememberMe" name="rememberMe" />
+              <span>Remember me</span>
+            </label>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="submit-btn" (click)="onLogin($event)">
+            SIGN IN
+          </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="divider">
+          <span class="divider-text">AUTHORIZED PERSONNEL ONLY</span>
         </div>
 
-        <!-- Footer -->
-        <div class="text-center mt-8 space-y-3">
-            <p class="text-red-100 text-sm">
-                Need assistance? Contact 
-                <a href="mailto:support@mantech.com" class="font-semibold text-white hover:text-red-200 transition-colors underline">
-                    IT Support
-                </a>
-            </p>
-            <div class="flex justify-center space-x-4 text-xs text-red-200">
-                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                <span>•</span>
-                <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
-                <span>•</span>
-                <a href="#" class="hover:text-white transition-colors">Support Portal</a>
-            </div>
-            <p class="text-xs text-red-300 pt-2">
-                © 2024 ManTech International Corporation. All rights reserved.
-            </p>
+        <!-- Support Link -->
+        <div class="support-section">
+          <p class="support-text">Need assistance?</p>
+          <a href="#" class="support-link">Contact IT Support</a>
         </div>
+      </div>
     </div>
 
-    <!-- JavaScript for functionality -->
-    <script>
-        // Password visibility toggle
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const passwordToggle = document.getElementById('password-toggle');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                passwordToggle.classList.remove('fa-eye');
-                passwordToggle.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                passwordToggle.classList.remove('fa-eye-slash');
-                passwordToggle.classList.add('fa-eye');
-            }
-        }
-
-        // Form submission handling
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitButton = e.target.querySelector('button[type="submit"]');
-            const originalContent = submitButton.innerHTML;
-            
-            // Show loading state
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Authenticating...';
-            submitButton.disabled = true;
-            
-            // Simulate authentication process
-            setTimeout(() => {
-                submitButton.innerHTML = originalContent;
-                submitButton.disabled = false;
-                alert('Login functionality would be implemented here');
-            }, 2000);
-        });
-
-        // Add subtle animations on input focus
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.classList.add('transform', 'scale-105');
-            });
-            
-            input.addEventListener('blur', function() {
-                this.parentElement.classList.remove('transform', 'scale-105');
-            });
-        });
-    </script>
-</body>
-</html>
+    <!-- Footer -->
+    <div class="footer">
+      <div class="encryption-badge">
+        <svg class="encryption-icon" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+        </svg>
+        <span>AES-256 Encrypted Connection</span>
+      </div>
+      <p class="copyright">© 2024 ManTech International Corporation</p>
+    </div>
+  </div>
+</div>
