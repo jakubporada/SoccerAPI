@@ -1,217 +1,648 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ManTech International - Secure Login</title>
-    <link rel="stylesheet" href="login.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <!-- Background Animation -->
-    <div class="background">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
-        <div class="shape shape-4"></div>
-    </div>
+/* ManTech International - Login Page Styles */
 
-    <!-- Main Container -->
-    <div class="container">
-        <div class="login-wrapper">
-            
-            <!-- Header Section -->
-            <div class="header">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h1>ManTech</h1>
-                    <h2>International Corporation</h2>
-                </div>
-                <p class="tagline">Mission-Critical Solutions & Advanced Technology</p>
-                <div class="security-badge">
-                    <i class="fas fa-lock"></i>
-                    <span>Enterprise Security Portal</span>
-                </div>
-            </div>
+/* CSS Variables for ManTech Brand Colors */
+:root {
+    --mantech-red: #C8102E;
+    --mantech-dark-red: #A50E25;
+    --mantech-light-red: #E8485F;
+    --mantech-blue: #003366;
+    --mantech-dark-blue: #002244;
+    --mantech-gray: #F8F9FA;
+    --mantech-dark-gray: #343A40;
+    --mantech-text: #2C3E50;
+    --mantech-light-text: #6C757D;
+    --white: #FFFFFF;
+    --success: #28A745;
+    --warning: #FFC107;
+    --danger: #DC3545;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.15);
+    --shadow-heavy: rgba(0, 0, 0, 0.25);
+    --gradient-red: linear-gradient(135deg, var(--mantech-red) 0%, var(--mantech-dark-red) 100%);
+    --gradient-blue: linear-gradient(135deg, var(--mantech-blue) 0%, var(--mantech-dark-blue) 100%);
+}
 
-            <!-- Login Form -->
-            <div class="login-form">
-                <form id="loginForm">
-                    <div class="form-header">
-                        <h3>Secure Access</h3>
-                        <p>Sign in to your ManTech account</p>
-                    </div>
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-                    <div class="form-group">
-                        <label for="email">
-                            <i class="fas fa-user"></i>
-                            Email Address
-                        </label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            required 
-                            placeholder="Enter your email address"
-                            autocomplete="email"
-                        >
-                        <div class="input-border"></div>
-                    </div>
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: var(--mantech-text);
+    overflow-x: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
 
-                    <div class="form-group">
-                        <label for="password">
-                            <i class="fas fa-lock"></i>
-                            Password
-                        </label>
-                        <div class="password-wrapper">
-                            <input 
-                                type="password" 
-                                id="password" 
-                                name="password" 
-                                required 
-                                placeholder="Enter your password"
-                                autocomplete="current-password"
-                            >
-                            <button type="button" class="password-toggle" onclick="togglePassword()">
-                                <i class="fas fa-eye" id="passwordIcon"></i>
-                            </button>
-                        </div>
-                        <div class="input-border"></div>
-                    </div>
+body.loaded {
+    opacity: 1;
+}
 
-                    <div class="form-options">
-                        <div class="remember-me">
-                            <input type="checkbox" id="remember" name="remember">
-                            <label for="remember">Remember me</label>
-                        </div>
-                        <a href="#" class="forgot-password">Forgot Password?</a>
-                    </div>
+/* Background */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-red);
+    z-index: -1;
+}
 
-                    <button type="submit" class="login-btn">
-                        <span class="btn-text">Sign In Securely</span>
-                        <i class="fas fa-arrow-right btn-icon"></i>
-                        <div class="btn-loader">
-                            <i class="fas fa-spinner fa-spin"></i>
-                        </div>
-                    </button>
+/* Animated Background Shapes */
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    animation: float 6s ease-in-out infinite;
+}
 
-                    <div class="divider">
-                        <span>Or continue with</span>
-                    </div>
+.shape-1 {
+    width: 200px;
+    height: 200px;
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+}
 
-                    <div class="sso-options">
-                        <button type="button" class="sso-btn microsoft">
-                            <i class="fab fa-microsoft"></i>
-                            <span>Microsoft 365</span>
-                        </button>
-                        <button type="button" class="sso-btn cac">
-                            <i class="fas fa-id-card"></i>
-                            <span>CAC/PIV</span>
-                        </button>
-                    </div>
-                </form>
+.shape-2 {
+    width: 150px;
+    height: 150px;
+    top: 70%;
+    right: 10%;
+    animation-delay: -2s;
+}
 
-                <!-- Security Notice -->
-                <div class="security-notice">
-                    <i class="fas fa-shield-check"></i>
-                    <div class="notice-content">
-                        <h4>Security Notice</h4>
-                        <p>This system is for authorized ManTech personnel only. All activities are monitored and logged.</p>
-                    </div>
-                </div>
-            </div>
+.shape-3 {
+    width: 100px;
+    height: 100px;
+    top: 30%;
+    right: 20%;
+    animation-delay: -4s;
+}
 
-            <!-- Footer -->
-            <div class="footer">
-                <div class="support-info">
-                    <p>Need help? Contact <a href="mailto:support@mantech.com">IT Support</a></p>
-                </div>
-                <div class="footer-links">
-                    <a href="#">Privacy Policy</a>
-                    <span>•</span>
-                    <a href="#">Terms of Service</a>
-                    <span>•</span>
-                    <a href="#">Security</a>
-                </div>
-                <div class="copyright">
-                    <p>&copy; 2024 ManTech International Corporation. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+.shape-4 {
+    width: 120px;
+    height: 120px;
+    bottom: 20%;
+    left: 20%;
+    animation-delay: -3s;
+}
 
-    <!-- JavaScript -->
-    <script>
-        // Password toggle functionality
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const passwordIcon = document.getElementById('passwordIcon');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                passwordIcon.classList.remove('fa-eye');
-                passwordIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                passwordIcon.classList.remove('fa-eye-slash');
-                passwordIcon.classList.add('fa-eye');
-            }
-        }
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.1;
+    }
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 0.2;
+    }
+}
 
-        // Form submission
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = this.querySelector('.login-btn');
-            const btnText = submitBtn.querySelector('.btn-text');
-            const btnIcon = submitBtn.querySelector('.btn-icon');
-            const btnLoader = submitBtn.querySelector('.btn-loader');
-            
-            // Show loading state
-            submitBtn.classList.add('loading');
-            btnText.style.opacity = '0';
-            btnIcon.style.opacity = '0';
-            btnLoader.style.opacity = '1';
-            
-            // Simulate authentication
-            setTimeout(() => {
-                submitBtn.classList.remove('loading');
-                btnText.style.opacity = '1';
-                btnIcon.style.opacity = '1';
-                btnLoader.style.opacity = '0';
-                
-                // Show success or redirect
-                alert('Login functionality would be implemented here');
-            }, 2000);
-        });
+/* Main Container */
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
 
-        // Input focus animations
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.classList.add('focused');
-            });
-            
-            input.addEventListener('blur', function() {
-                if (!this.value) {
-                    this.parentElement.classList.remove('focused');
-                }
-            });
+.login-wrapper {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow: 0 25px 50px var(--shadow-heavy);
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    text-align: center;
+    animation: slideUp 0.8s ease-out;
+}
 
-            // Check if input has value on load
-            if (input.value) {
-                input.parentElement.classList.add('focused');
-            }
-        });
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        // Add page load animation
-        window.addEventListener('load', function() {
-            document.body.classList.add('loaded');
-        });
-    </script>
-</body>
-</html>
+/* Header Section */
+.header {
+    margin-bottom: 40px;
+}
+
+.logo {
+    margin-bottom: 20px;
+}
+
+.logo-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--gradient-red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 10px 30px rgba(200, 16, 46, 0.3);
+    animation: pulse 2s ease-in-out infinite alternate;
+}
+
+.logo-icon i {
+    font-size: 32px;
+    color: var(--white);
+}
+
+@keyframes pulse {
+    from {
+        box-shadow: 0 10px 30px rgba(200, 16, 46, 0.3);
+    }
+    to {
+        box-shadow: 0 15px 40px rgba(200, 16, 46, 0.5);
+    }
+}
+
+.logo h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--mantech-red);
+    margin-bottom: 5px;
+    letter-spacing: -1px;
+}
+
+.logo h2 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--mantech-light-text);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tagline {
+    font-size: 16px;
+    color: var(--mantech-light-text);
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.security-badge {
+    display: inline-flex;
+    align-items: center;
+    background: var(--gradient-blue);
+    color: var(--white);
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(0, 51, 102, 0.3);
+}
+
+.security-badge i {
+    margin-right: 8px;
+    font-size: 10px;
+}
+
+/* Form Section */
+.login-form {
+    text-align: left;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-header h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--mantech-text);
+    margin-bottom: 8px;
+}
+
+.form-header p {
+    font-size: 14px;
+    color: var(--mantech-light-text);
+}
+
+/* Form Groups */
+.form-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--mantech-text);
+    margin-bottom: 8px;
+}
+
+.form-group label i {
+    margin-right: 8px;
+    color: var(--mantech-red);
+    width: 16px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid #E9ECEF;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--mantech-text);
+    background: var(--white);
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: var(--mantech-red);
+    box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.1);
+    transform: translateY(-2px);
+}
+
+.form-group input::placeholder {
+    color: #ADB5BD;
+    font-weight: 400;
+}
+
+.input-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-red);
+    transition: width 0.3s ease;
+}
+
+.form-group.focused .input-border {
+    width: 100%;
+}
+
+/* Password Wrapper */
+.password-wrapper {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--mantech-light-text);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+    color: var(--mantech-red);
+}
+
+/* Form Options */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+}
+
+.remember-me input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    accent-color: var(--mantech-red);
+}
+
+.remember-me label {
+    color: var(--mantech-text);
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.forgot-password {
+    color: var(--mantech-red);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: var(--mantech-dark-red);
+    text-decoration: underline;
+}
+
+/* Login Button */
+.login-btn {
+    position: relative;
+    width: 100%;
+    background: var(--gradient-red);
+    color: var(--white);
+    border: none;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(200, 16, 46, 0.4);
+}
+
+.login-btn:active {
+    transform: translateY(0);
+}
+
+.btn-loader {
+    opacity: 0;
+    position: absolute;
+    transition: opacity 0.3s ease;
+}
+
+.login-btn.loading {
+    pointer-events: none;
+}
+
+.login-btn.loading .btn-loader {
+    opacity: 1;
+}
+
+/* Divider */
+.divider {
+    position: relative;
+    text-align: center;
+    margin: 30px 0;
+    color: var(--mantech-light-text);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #E9ECEF;
+    z-index: 1;
+}
+
+.divider span {
+    background: var(--white);
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* SSO Options */
+.sso-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.sso-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 2px solid #E9ECEF;
+    border-radius: 10px;
+    background: var(--white);
+    color: var(--mantech-text);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.sso-btn:hover {
+    border-color: var(--mantech-red);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px var(--shadow-light);
+}
+
+.sso-btn.microsoft i {
+    color: #0078D4;
+}
+
+.sso-btn.cac i {
+    color: var(--success);
+}
+
+/* Security Notice */
+.security-notice {
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    border: 1px solid #2196F3;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.security-notice i {
+    color: #1976D2;
+    font-size: 20px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.notice-content h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1565C0;
+    margin-bottom: 5px;
+}
+
+.notice-content p {
+    font-size: 12px;
+    color: #1976D2;
+    line-height: 1.5;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    color: var(--mantech-light-text);
+}
+
+.support-info {
+    margin-bottom: 15px;
+}
+
+.support-info a {
+    color: var(--mantech-red);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.support-info a:hover {
+    text-decoration: underline;
+}
+
+.footer-links {
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
+.footer-links a {
+    color: var(--mantech-light-text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--mantech-red);
+}
+
+.footer-links span {
+    margin: 0 8px;
+}
+
+.copyright {
+    font-size: 11px;
+    color: #ADB5BD;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-wrapper {
+        padding: 30px 25px;
+        margin: 10px;
+        border-radius: 20px;
+    }
+    
+    .logo h1 {
+        font-size: 28px;
+    }
+    
+    .form-header h3 {
+        font-size: 20px;
+    }
+    
+    .sso-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-options {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .login-wrapper {
+        padding: 25px 20px;
+    }
+    
+    .logo-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .logo-icon i {
+        font-size: 24px;
+    }
+    
+    .logo h1 {
+        font-size: 24px;
+    }
+    
+    .tagline {
+        font-size: 14px;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    :root {
+        --mantech-red: #B71C1C;
+        --mantech-dark-red: #8B0000;
+        --shadow-light: rgba(0, 0, 0, 0.3);
+        --shadow-medium: rgba(0, 0, 0, 0.4);
+        --shadow-heavy: rgba(0, 0, 0, 0.5);
+    }
+    
+    .login-wrapper {
+        border: 3px solid var(--mantech-red);
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .shape {
+        animation: none;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .background,
+    .shape,
+    .security-notice,
+    .sso-options {
+        display: none;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .login-wrapper {
+        box-shadow: none;
+        border: 2px solid black;
+    }
+}
